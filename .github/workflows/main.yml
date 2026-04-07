@@ -8,22 +8,25 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - name: 📥 Checkout
+      - name: 📦 Checkout
         uses: actions/checkout@v4
 
-      - name: 🔧 Node
+      - name: 🔧 Setup Node
         uses: actions/setup-node@v4
         with:
           node-version: 18
+          cache: 'npm'
 
-      - name: ⚙️ Expo
+      - name: 🚀 Setup Expo
         uses: expo/expo-github-action@v8
         with:
           expo-version: latest
           token: ${{ secrets.EXPO_TOKEN }}
 
-      - name: 📦 Install
+      - name: 📦 Install Dependencies
         run: npm install
 
-      - name: 🚀 Build
-        run: npx eas-cli build --platform android --profile development --non-interactive
+      - name: 🛠️ Build APK
+        # --non-interactive flag lagana zaroori hai CI ke liye
+        run: npx eas-cli build --platform android --profile preview --non-interactive
+        
